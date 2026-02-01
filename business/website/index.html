@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToneType - Say it like you mean it</title>
+    <meta name="description" content="AI keyboard that detects your tone and enhances your messages with the perfect emojis and styling. Works in any app.">
+    <meta name="keywords" content="keyboard, AI, emoji, tone detection, text styling, messaging">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ToneType - Say it like you mean it">
+    <meta property="og:description" content="AI keyboard that detects your tone and enhances your messages with the perfect emojis and styling.">
+    <meta property="og:image" content="https://tonetype.app/og-image.png">
+    <meta property="og:url" content="https://tonetype.app">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ToneType - Say it like you mean it">
+    <meta name="twitter:description" content="AI keyboard that detects your tone and enhances your messages.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple-500: #7C3AED;
+            --purple-600: #6D28D9;
+            --purple-700: #5B21B6;
+            --purple-900: #4C1D95;
+            --gray-50: #FAFAF9;
+            --gray-100: #F5F5F4;
+            --gray-200: #E7E5E4;
+            --gray-500: #78716C;
+            --gray-700: #44403C;
+            --gray-900: #1C1917;
+            --green-500: #10B981;
+            --yellow-400: #FCD34D;
+            --blue-300: #93C5FD;
+            --red-400: #F87171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 249, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--gray-900);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--purple-500), var(--purple-900));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .logo-text span {
+            color: var(--purple-600);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-600);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-500), var(--purple-700));
+            color: white;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-200);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple-500);
+            color: var(--purple-600);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--gray-50) 0%, white 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--purple-900) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-demo {
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid var(--gray-200);
+        }
+
+        .demo-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .demo-before, .demo-after {
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .demo-before {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .demo-after {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(76, 29, 149, 0.1));
+            color: var(--gray-900);
+        }
+
+        .demo-arrow {
+            text-align: center;
+            padding: 16px;
+            color: var(--purple-500);
+            font-size: 24px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: 20px;
+            padding: 32px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--gray-500);
+        }
+
+        /* Tones Section */
+        .tones {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--gray-50) 0%, white 100%);
+        }
+
+        .tones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .tone-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            transition: border-color 0.2s;
+        }
+
+        .tone-card:hover {
+            border-color: var(--purple-500);
+        }
+
+        .tone-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tone-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .tone-name h4 {
+            font-weight: 600;
+        }
+
+        .tone-example {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .tone-emojis {
+            margin-top: 12px;
+            font-size: 20px;
+        }
+
+        /* Privacy Section */
+        .privacy {
+            padding: 100px 0;
+            background: var(--purple-900);
+            color: white;
+        }
+
+        .privacy .section-header h2 {
+            color: white;
+        }
+
+        .privacy .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .privacy-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .privacy-point {
+            display: flex;
+            gap: 16px;
+        }
+
+        .privacy-point-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .privacy-point h4 {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .privacy-point p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            text-align: center;
+            background: white;
+        }
+
+        .cta h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            color: var(--gray-500);
+            margin-bottom: 32px;
+        }
+
+        .download-badges {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-badge {
+            display: inline-block;
+            height: 54px;
+        }
+
+        .download-badge img {
+            height: 100%;
+            width: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            background: var(--gray-100);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-600);
+        }
+
+        .footer-copy {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .demo-card {
+                margin: 0 16px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon">T</div>
+                <div class="logo-text">Tone<span>Type</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#tones">Tones</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#download" class="btn btn-primary">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Say it like you mean it.</h1>
+            <p>The AI keyboard that understands your tone. One tap adds the perfect emojis and styling to any message.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <span>Download Free</span>
+                    <span>&#8594;</span>
+                </a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+
+            <div class="hero-demo">
+                <div class="demo-card">
+                    <div class="demo-label">Before</div>
+                    <div class="demo-before">I can't believe you actually did that</div>
+
+                    <div class="demo-arrow">&#10024; tap enhance &#10024;</div>
+
+                    <div class="demo-label">After</div>
+                    <div class="demo-after">I <strong>can't believe</strong> you actually did that! &#128562;&#10024;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Communicate clearly</h2>
+                <p>ToneType bridges the gap between what you type and what you mean.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #FEF3C7, #FCD34D);">&#129504;</div>
+                    <h3>AI Tone Detection</h3>
+                    <p>Our AI understands context, not just keywords. It knows the difference between excited and frustrated.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #DBEAFE, #93C5FD);">&#127919;</div>
+                    <h3>Smart Emphasis</h3>
+                    <p>ToneType identifies which words carry emotional weight and styles them appropriately.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #FCE7F3, #F9A8D4);">&#128522;</div>
+                    <h3>Context-Aware Emojis</h3>
+                    <p>No more scrolling. ToneType suggests the perfect emojis based on what you actually mean.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #E0E7FF, #A5B4FC);">&#128289;</div>
+                    <h3>Unicode Styling</h3>
+                    <p>Bold, italic, and stylized text that works everywhere&mdash;even where formatting isn't supported.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #D1FAE5, #6EE7B7);">&#128274;</div>
+                    <h3>Privacy First</h3>
+                    <p>Messages are only processed when you tap enhance. We never store or log what you type.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #FEE2E2, #FCA5A5);">&#9889;</div>
+                    <h3>Works Everywhere</h3>
+                    <p>Messages, WhatsApp, Instagram, Slack&mdash;anywhere you type, ToneType works.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tones Section -->
+    <section class="tones" id="tones">
+        <div class="container">
+            <div class="section-header">
+                <h2>We get your tone</h2>
+                <p>ToneType recognizes a range of emotional tones and responds appropriately.</p>
+            </div>
+
+            <div class="tones-grid">
+                <div class="tone-card">
+                    <div class="tone-name">
+                        <div class="tone-dot" style="background: #FCD34D;"></div>
+                        <h4>Happy</h4>
+                    </div>
+                    <p class="tone-example">"This is amazing news!"</p>
+                    <div class="tone-emojis">&#128522; &#127881; &#10024;</div>
+                </div>
+
+                <div class="tone-card">
+                    <div class="tone-name">
+                        <div class="tone-dot" style="background: #93C5FD;"></div>
+                        <h4>Sad</h4>
+                    </div>
+                    <p class="tone-example">"&#7435;'&#618; &#640;&#7431;&#593;&#671;&#671;&#655; &#618;&#7433;&#7433; &#618;&#7435;&#7433;&#7433; &#655;&#7439;&#7452;"</p>
+                    <div class="tone-emojis">&#128546; &#128148; &#128532;</div>
+                </div>
+
+                <div class="tone-card">
+                    <div class="tone-name">
+                        <div class="tone-dot" style="background: #F87171;"></div>
+                        <h4>Angry</h4>
+                    </div>
+                    <p class="tone-example">"<strong>This is unacceptable</strong>"</p>
+                    <div class="tone-emojis">&#128548; &#128293; &#128545;</div>
+                </div>
+
+                <div class="tone-card">
+                    <div class="tone-name">
+                        <div class="tone-dot" style="background: #A78BFA;"></div>
+                        <h4>Excited</h4>
+                    </div>
+                    <p class="tone-example">"<em><strong>I can't wait!</strong></em>"</p>
+                    <div class="tone-emojis">&#128640; &#9889; &#127882;</div>
+                </div>
+
+                <div class="tone-card">
+                    <div class="tone-name">
+                        <div class="tone-dot" style="background: #F472B6;"></div>
+                        <h4>Sarcastic</h4>
+                    </div>
+                    <p class="tone-example">"<em>Oh, that's just great</em>"</p>
+                    <div class="tone-emojis">&#128527; &#128580; &#128133;</div>
+                </div>
+
+                <div class="tone-card">
+                    <div class="tone-name">
+                        <div class="tone-dot" style="background: #FB923C;"></div>
+                        <h4>Urgent</h4>
+                    </div>
+                    <p class="tone-example">"<strong>NEED THIS NOW</strong>"</p>
+                    <div class="tone-emojis">&#9888;&#65039; &#10071; &#128680;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section class="privacy" id="privacy">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your privacy matters</h2>
+                <p>We built ToneType with privacy as a core principle, not an afterthought.</p>
+            </div>
+
+            <div class="privacy-points">
+                <div class="privacy-point">
+                    <div class="privacy-point-icon">&#128274;</div>
+                    <div>
+                        <h4>Never Stored</h4>
+                        <p>Your messages are processed and immediately discarded. We have no record of what you type.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-point">
+                    <div class="privacy-point-icon">&#128065;</div>
+                    <div>
+                        <h4>On-Demand Only</h4>
+                        <p>Text is only sent when you tap the enhance button. We don't monitor your typing.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-point">
+                    <div class="privacy-point-icon">&#128176;</div>
+                    <div>
+                        <h4>Never Sold</h4>
+                        <p>We don't sell your data. Ever. Our business model is the product, not your information.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-point">
+                    <div class="privacy-point-icon">&#128272;</div>
+                    <div>
+                        <h4>Encrypted</h4>
+                        <p>All data transmission uses HTTPS. Your API key is stored securely in encrypted storage.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="download">
+        <div class="container">
+            <h2>Ready to be understood?</h2>
+            <p>Download ToneType and start communicating with clarity.</p>
+
+            <div class="download-badges">
+                <a href="#" class="btn btn-primary" style="padding: 16px 32px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    <span>Download for iOS</span>
+                </a>
+                <a href="#" class="btn btn-secondary" style="padding: 16px 32px;">
+                    <span>Android Coming Soon</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="mailto:hello@tonetype.app">Contact</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 ToneType. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

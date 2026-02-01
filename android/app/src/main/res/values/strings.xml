@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToneType</string>
+    <string name="settings_title">ToneType Settings</string>
+    <string name="subtype_en_US">English (US)</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Welcome to ToneType</string>
+    <string name="onboarding_subtitle">The keyboard that understands your tone</string>
+    <string name="onboarding_step1_title">Type Your Message</string>
+    <string name="onboarding_step1_desc">Use ToneType like any other keyboard</string>
+    <string name="onboarding_step2_title">Tap Enhance</string>
+    <string name="onboarding_step2_desc">Press the ✨ button to analyze your tone</string>
+    <string name="onboarding_step3_title">Send with Clarity</string>
+    <string name="onboarding_step3_desc">Your message now includes the perfect emojis and styling</string>
+    <string name="enable_keyboard">Enable Keyboard</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- Settings -->
+    <string name="api_key_title">OpenAI API Key</string>
+    <string name="api_key_hint">Enter your API key</string>
+    <string name="api_key_description">Required for AI-powered tone detection</string>
+    <string name="enable_emojis">Add Emojis</string>
+    <string name="enable_styling">Apply Text Styling</string>
+    <string name="emoji_intensity">Emoji Intensity</string>
+    <string name="intensity_low">Low (1-2)</string>
+    <string name="intensity_medium">Medium (2-3)</string>
+    <string name="intensity_high">High (3-5)</string>
+    <string name="reset_settings">Reset to Defaults</string>
+    <string name="version_label">Version</string>
+
+    <!-- Keyboard -->
+    <string name="enhance_button">Enhance</string>
+    <string name="enhancing">Analyzing tone…</string>
+    <string name="enhancement_complete">Enhanced!</string>
+    <string name="enhancement_error">Could not enhance. Try again.</string>
+
+    <!-- Tones -->
+    <string name="tone_happy">Happy</string>
+    <string name="tone_sad">Sad</string>
+    <string name="tone_angry">Angry</string>
+    <string name="tone_excited">Excited</string>
+    <string name="tone_sarcastic">Sarcastic</string>
+    <string name="tone_urgent">Urgent</string>
+    <string name="tone_formal">Formal</string>
+    <string name="tone_casual">Casual</string>
+</resources>

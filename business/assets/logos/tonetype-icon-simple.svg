@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#4C1D95"/>
+    </linearGradient>
+  </defs>
+
+  <!-- iOS App Icon Background -->
+  <rect width="1024" height="1024" rx="224" ry="224" fill="url(#iconGradient)"/>
+
+  <!-- Speech bubble with wave -->
+  <g transform="translate(192, 192) scale(1.25)">
+    <!-- Main bubble -->
+    <path d="M 64 64
+             L 448 64
+             Q 512 64 512 128
+             L 512 320
+             Q 512 384 448 384
+             L 256 384
+             L 176 464
+             L 176 384
+             L 64 384
+             Q 0 384 0 320
+             L 0 128
+             Q 0 64 64 64 Z"
+          fill="#FFFFFF"/>
+
+    <!-- Tone wave -->
+    <g stroke="#7C3AED" stroke-width="24" stroke-linecap="round" fill="none">
+      <path d="M 128 224 Q 168 144 208 224 Q 248 304 288 224"/>
+      <path d="M 320 224 Q 360 144 400 224 Q 440 304 480 224" opacity="0.6"/>
+    </g>
+  </g>
+</svg>

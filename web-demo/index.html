@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToneType - Voice & Text Tone Detection</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab:hover {
+            border-color: #667eea;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .input-section label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .settings {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .setting {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .setting input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .setting select, .setting input[type="password"] {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .setting input[type="password"] {
+            width: 200px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-record {
+            background: #ef4444;
+            color: white;
+            width: auto;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+        }
+
+        .btn-record:hover {
+            background: #dc2626;
+        }
+
+        .btn-record.recording {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .voice-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .voice-status {
+            margin-top: 16px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .waveform {
+            height: 60px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            overflow: hidden;
+        }
+
+        .waveform-bar {
+            width: 4px;
+            background: #667eea;
+            border-radius: 2px;
+            transition: height 0.1s;
+        }
+
+        .emotion-breakdown {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .emotion-breakdown h4 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .emotion-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .emotion-name {
+            width: 80px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .emotion-track {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .emotion-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .emotion-score {
+            width: 40px;
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+        }
+
+        .result-section {
+            display: none;
+        }
+
+        .result-section.visible {
+            display: block;
+        }
+
+        .tone-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .tone-happy { background: #f59e0b; }
+        .tone-sad { background: #6b7280; }
+        .tone-angry { background: #ef4444; }
+        .tone-excited { background: #8b5cf6; }
+        .tone-anxious { background: #6b7280; }
+        .tone-neutral { background: #9ca3af; }
+        .tone-fear { background: #1e3a5f; }
+        .tone-surprise { background: #ec4899; }
+        .tone-disgust { background: #65a30d; }
+
+        .preview-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 18px;
+            line-height: 1.6;
+            min-height: 80px;
+            margin-bottom: 16px;
+            word-break: break-word;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .actions .btn {
+            flex: 1;
+        }
+
+        .examples {
+            margin-top: 20px;
+        }
+
+        .examples h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .example-btn {
+            padding: 10px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+        }
+
+        .example-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .api-key-section {
+            margin-top: 16px;
+            padding: 16px;
+            background: #fef3c7;
+            border-radius: 12px;
+            border: 1px solid #f59e0b;
+        }
+
+        .api-key-section h4 {
+            font-size: 14px;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .api-key-section p {
+            font-size: 13px;
+            color: #a16207;
+            margin-bottom: 12px;
+        }
+
+        .api-key-section input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .copied-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .copied-toast.visible {
+            opacity: 1;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .settings {
+                flex-direction: column;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ ToneType</h1>
+            <p>Detect tone from voice or text, enhance with emojis & styling</p>
+        </header>
+
+        <div class="card">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" data-tab="text">📝 Text</button>
+                <button class="tab" data-tab="voice">🎤 Voice</button>
+            </div>
+
+            <!-- Text Tab -->
+            <div class="tab-content active" id="textTab">
+                <div class="input-section">
+                    <label for="messageInput">Your message:</label>
+                    <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+
+                    <div class="api-key-section" style="margin-top: 12px;">
+                        <small>🔑 OpenAI API Key (for accurate emphasis detection):</small>
+                        <input type="password" id="openaiApiKey" placeholder="sk-... (optional - uses basic detection without)">
+                    </div>
+
+                    <div class="settings">
+                        <label class="setting">
+                            <input type="checkbox" id="enableEmojis" checked>
+                            Add emojis
+                        </label>
+                        <label class="setting">
+                            <input type="checkbox" id="enableStyling" checked>
+                            Text styling
+                        </label>
+                        <label class="setting">
+                            <select id="intensity">
+                                <option value="low">1 emoji</option>
+                                <option value="medium" selected>2 emojis</option>
+                                <option value="high">3 emojis</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary" id="enhanceBtn">
+                        <span id="btnText">Enhance ✨</span>
+                    </button>
+                </div>
+
+                <div class="examples">
+                    <h3>Quick examples:</h3>
+                    <div class="example-grid">
+                        <button class="example-btn" data-text="I'm so happy to see you!">😊 Happy</button>
+                        <button class="example-btn" data-text="I really miss the old days.">😢 Sad</button>
+                        <button class="example-btn" data-text="I can't believe you did that!">😤 Angry</button>
+                        <button class="example-btn" data-text="OMG this is going to be amazing!!!">🚀 Excited</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice Tab -->
+            <div class="tab-content" id="voiceTab">
+                <div class="api-key-section">
+                    <h4>🔑 Hume AI API Key Required</h4>
+                    <p>Get your free API key at <a href="https://app.hume.ai" target="_blank">app.hume.ai</a></p>
+                    <input type="password" id="humeApiKey" placeholder="Enter your Hume AI API key">
+                </div>
+
+                <div class="voice-section">
+                    <button class="btn btn-record" id="recordBtn">
+                        <span id="recordBtnText">🎤 Hold to Record</span>
+                    </button>
+                    <div class="voice-status" id="voiceStatus">Press and hold to record your voice</div>
+
+                    <div class="waveform" id="waveform" style="display: none;">
+                        <!-- Waveform bars will be added dynamically -->
+                    </div>
+                </div>
+
+                <div id="voiceResult" style="display: none;">
+                    <div class="emotion-breakdown">
+                        <h4>Detected Emotions (from voice):</h4>
+                        <div id="emotionBars"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section (shared) -->
+            <div class="result-section" id="resultSection">
+                <div style="margin-top: 20px;">
+                    <span class="tone-badge" id="toneBadge">Happy</span>
+                    <span id="sourceLabel" style="font-size: 12px; color: #666; margin-left: 8px;"></span>
+                </div>
+
+                <label style="display: block; font-weight: 600; margin: 12px 0 8px; color: #333;">Enhanced:</label>
+                <div class="preview-box" id="previewBox"></div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary" id="copyBtn">📋 Copy</button>
+                    <button class="btn btn-primary" id="newBtn">New Message</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>ToneType Demo • Voice powered by <a href="https://hume.ai" target="_blank" style="color: white;">Hume AI</a></p>
+        </footer>
+    </div>
+
+    <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+
+    <script>
+        // ============================================
+        // Unicode Character Maps
+        // ============================================
+        const boldMap = {};
+        const italicMap = {};
+        const boldItalicMap = {};
+        const smallCapsMap = {};
+
+        for (let i = 0; i < 26; i++) {
+            const upper = String.fromCharCode(65 + i);
+            const lower = String.fromCharCode(97 + i);
+            boldMap[upper] = String.fromCodePoint(0x1D400 + i);
+            boldMap[lower] = String.fromCodePoint(0x1D41A + i);
+            italicMap[upper] = String.fromCodePoint(0x1D434 + i);
+            italicMap[lower] = String.fromCodePoint(0x1D44E + i);
+            boldItalicMap[upper] = String.fromCodePoint(0x1D468 + i);
+            boldItalicMap[lower] = String.fromCodePoint(0x1D482 + i);
+        }
+
+        const smallCapsChars = 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ';
+        for (let i = 0; i < 26; i++) {
+            smallCapsMap[String.fromCharCode(97 + i)] = smallCapsChars[i];
+            smallCapsMap[String.fromCharCode(65 + i)] = smallCapsChars[i];
+        }
+
+        for (let i = 0; i < 10; i++) {
+            boldMap[String(i)] = String.fromCodePoint(0x1D7CE + i);
+        }
+
+        // ============================================
+        // Tone & Emoji Mappings
+        // ============================================
+        const emojiMap = {
+            happy: ['😊', '🎉', '✨'],
+            sad: ['😢', '💔', '😔'],
+            angry: ['😤', '🔥', '😡'],
+            excited: ['🚀', '⚡', '🎊'],
+            anxious: ['😰', '😬', '💭'],
+            fear: ['😨', '😱', '🫣'],
+            surprise: ['😲', '🤯', '😮'],
+            disgust: ['🤢', '😒', '🙄'],
+            neutral: []
+        };
+
+        // REMOVED static keyword lists - these were just guessing
+        // The AI now tells us which specific words are emphasized based on context
+
+        const toneStyles = {
+            happy: 'boldItalic',
+            sad: 'smallCaps',
+            angry: 'bold',
+            excited: 'boldItalic',
+            anxious: 'italic',
+            fear: 'italic',
+            surprise: 'boldItalic',
+            disgust: 'italic',
+            neutral: 'normal'
+        };
+
+        const toneColors = {
+            happy: '#f59e0b',
+            sad: '#6b7280',
+            angry: '#ef4444',
+            excited: '#8b5cf6',
+            anxious: '#6b7280',
+            fear: '#1e3a5f',
+            surprise: '#ec4899',
+            disgust: '#65a30d',
+            neutral: '#9ca3af'
+        };
+
+        // Hume emotion to our tone mapping
+        const humeToTone = {
+            'Joy': 'happy',
+            'Excitement': 'excited',
+            'Amusement': 'happy',
+            'Contentment': 'happy',
+            'Sadness': 'sad',
+            'Disappointment': 'sad',
+            'Grief': 'sad',
+            'Anger': 'angry',
+            'Annoyance': 'angry',
+            'Contempt': 'angry',
+            'Disgust': 'disgust',
+            'Fear': 'fear',
+            'Anxiety': 'anxious',
+            'Horror': 'fear',
+            'Surprise (positive)': 'surprise',
+            'Surprise (negative)': 'surprise',
+            'Confusion': 'anxious',
+            'Interest': 'neutral',
+            'Calmness': 'neutral',
+            'Concentration': 'neutral',
+            'Contemplation': 'neutral',
+            'Determination': 'neutral',
+            'Realization': 'surprise'
+        };
+
+        // ============================================
+        // Helper Functions
+        // ============================================
+        function convertToStyle(text, style) {
+            let map;
+            switch (style) {
+                case 'bold': map = boldMap; break;
+                case 'italic': map = italicMap; break;
+                case 'boldItalic': map = boldItalicMap; break;
+                case 'smallCaps': map = smallCapsMap; break;
+                default: return text;
+            }
+            return Array.from(text).map(c => map[c] || c).join('');
+        }
+
+        // Simple offline tone detection (fallback when no API key)
+        function detectToneOffline(text) {
+            const lower = text.toLowerCase();
+            const isAllCaps = text === text.toUpperCase() && text.length > 5;
+
+            if (/\b(happy|glad|great|awesome|love|wonderful|amazing|excited|fantastic|thrilled)\b/i.test(lower)) return { tone: 'happy', emphasizedWords: [] };
+            if (/\b(sad|sorry|miss|unfortunately|disappointed|upset|heartbroken|depressed)\b/i.test(lower)) return { tone: 'sad', emphasizedWords: [] };
+            if (/\b(angry|mad|hate|furious|annoyed|frustrated|can't believe|unbelievable|ridiculous)\b/i.test(lower) || isAllCaps) return { tone: 'angry', emphasizedWords: [] };
+            if (/\b(omg|wow|amazing|incredible|can't wait)\b/i.test(lower) || text.includes('!!!')) return { tone: 'excited', emphasizedWords: [] };
+            if (/\b(worried|nervous|anxious|scared|afraid|stressed|concerned)\b/i.test(lower)) return { tone: 'anxious', emphasizedWords: [] };
+            return { tone: 'neutral', emphasizedWords: [] };
+        }
+
+        // AI-powered tone detection - returns both tone AND which specific words are emphasized
+        async function detectToneWithAI(text, apiKey) {
+            const prompt = `Analyze this message's emotional tone and identify which specific words are emphasized.
+
+IMPORTANT: "emphasizedWords" should contain the exact words from the message that carry emotional weight or would be stressed when spoken. This varies by context:
+- "I can't believe YOU did that" → emphasize "you" (shock at the person)
+- "I CAN'T believe you did that" → emphasize "can't" (disbelief)
+- "I can't believe you did THAT" → emphasize "that" (shock at the action)
+
+Return ONLY valid JSON:
+{
+  "tone": "happy|sad|angry|excited|anxious|neutral",
+  "emphasizedWords": ["word1", "word2"]
+}
+
+Message: "${text}"`;
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: 'You are a tone analyzer. Respond ONLY with valid JSON.' },
+                            { role: 'user', content: prompt }
+                        ],
+                        temperature: 0.3,
+                        max_tokens: 100
+                    })
+                });
+
+                if (!response.ok) throw new Error('API error');
+
+                const data = await response.json();
+                const content = data.choices?.[0]?.message?.content;
+                const parsed = JSON.parse(content);
+
+                return {
+                    tone: parsed.tone || 'neutral',
+                    emphasizedWords: parsed.emphasizedWords || []
+                };
+            } catch (e) {
+                console.error('AI detection failed:', e);
+                return detectToneOffline(text);
+            }
+        }
+
+        // Style only the AI-determined emphasized words (not guessing from a static list)
+        function styleEmphasizedWords(text, tone, emphasizedWords) {
+            const style = toneStyles[tone];
+            if (style === 'normal' || !emphasizedWords || emphasizedWords.length === 0) return text;
+
+            let result = text;
+            // Sort by length (longest first) to avoid partial replacements
+            const sortedWords = [...emphasizedWords].sort((a, b) => b.length - a.length);
+
+            for (const word of sortedWords) {
+                const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`\\b(${escaped})\\b`, 'gi');
+                result = result.replace(regex, (match) => convertToStyle(match, style));
+            }
+            return result;
+        }
+
+        function splitSentences(text) {
+            const matches = text.match(/[^.!?]*[.!?]+(?:\s|$)|[^.!?]+$/g);
+            return matches ? matches.map(s => s.trim()).filter(s => s) : [text];
+        }
+
+        function enhance(text, tone, emphasizedWords, enableEmojis, enableStyling, intensity) {
+            const sentences = splitSentences(text);
+            const count = intensity === 'low' ? 1 : intensity === 'high' ? 3 : 2;
+            const emojis = (emojiMap[tone] || []).slice(0, count).join('');
+
+            let enhanced = sentences.map(sentence => {
+                let result = sentence;
+                // Only style if we have AI-determined emphasized words
+                if (enableStyling && tone !== 'neutral' && emphasizedWords && emphasizedWords.length > 0) {
+                    result = styleEmphasizedWords(sentence, tone, emphasizedWords);
+                }
+                if (enableEmojis && emojis) {
+                    result += ' ' + emojis;
+                }
+                return result;
+            }).join(' ');
+
+            return enhanced;
+        }
+
+        // ============================================
+        // DOM Elements
+        // ============================================
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const messageInput = document.getElementById('messageInput');
+        const enhanceBtn = document.getElementById('enhanceBtn');
+        const btnText = document.getElementById('btnText');
+        const resultSection = document.getElementById('resultSection');
+        const toneBadge = document.getElementById('toneBadge');
+        const sourceLabel = document.getElementById('sourceLabel');
+        const previewBox = document.getElementById('previewBox');
+        const copyBtn = document.getElementById('copyBtn');
+        const newBtn = document.getElementById('newBtn');
+        const enableEmojis = document.getElementById('enableEmojis');
+        const enableStyling = document.getElementById('enableStyling');
+        const intensity = document.getElementById('intensity');
+        const copiedToast = document.getElementById('copiedToast');
+        const openaiApiKey = document.getElementById('openaiApiKey');
+        const recordBtn = document.getElementById('recordBtn');
+        const recordBtnText = document.getElementById('recordBtnText');
+        const voiceStatus = document.getElementById('voiceStatus');
+        const waveform = document.getElementById('waveform');
+        const voiceResult = document.getElementById('voiceResult');
+        const emotionBars = document.getElementById('emotionBars');
+        const humeApiKey = document.getElementById('humeApiKey');
+
+        let currentEnhanced = '';
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let audioContext = null;
+        let analyser = null;
+
+        // ============================================
+        // Tab Switching
+        // ============================================
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + 'Tab').classList.add('active');
+                resultSection.classList.remove('visible');
+            });
+        });
+
+        // ============================================
+        // Text Enhancement
+        // ============================================
+        enhanceBtn.addEventListener('click', async () => {
+            const text = messageInput.value.trim();
+            if (!text) {
+                messageInput.focus();
+                return;
+            }
+
+            btnText.innerHTML = '<span class="loading"></span>';
+            enhanceBtn.disabled = true;
+
+            try {
+                const apiKey = openaiApiKey.value.trim();
+                let result;
+
+                if (apiKey) {
+                    // Use AI to detect tone AND which specific words are emphasized
+                    result = await detectToneWithAI(text, apiKey);
+                    sourceLabel.textContent = '(AI-detected emphasis)';
+                } else {
+                    // Fallback: detect tone only, no emphasis styling without AI
+                    result = detectToneOffline(text);
+                    sourceLabel.textContent = '(basic detection - add API key for emphasis)';
+                }
+
+                const { tone, emphasizedWords } = result;
+                currentEnhanced = enhance(text, tone, emphasizedWords, enableEmojis.checked, enableStyling.checked, intensity.value);
+
+                toneBadge.textContent = tone.charAt(0).toUpperCase() + tone.slice(1);
+                toneBadge.className = 'tone-badge tone-' + tone;
+                previewBox.textContent = currentEnhanced;
+                resultSection.classList.add('visible');
+
+            } catch (e) {
+                console.error(e);
+                sourceLabel.textContent = '(error - using basic detection)';
+            }
+
+            btnText.textContent = 'Enhance ✨';
+            enhanceBtn.disabled = false;
+        });
+
+        // ============================================
+        // Voice Recording with Hume AI
+        // ============================================
+        function createWaveformBars() {
+            waveform.innerHTML = '';
+            for (let i = 0; i < 40; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'waveform-bar';
+                bar.style.height = '4px';
+                waveform.appendChild(bar);
+            }
+        }
+
+        function updateWaveform() {
+            if (!analyser || !isRecording) return;
+
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(dataArray);
+
+            const bars = waveform.querySelectorAll('.waveform-bar');
+            const step = Math.floor(dataArray.length / bars.length);
+
+            bars.forEach((bar, i) => {
+                const value = dataArray[i * step];
+                const height = Math.max(4, (value / 255) * 50);
+                bar.style.height = height + 'px';
+            });
+
+            if (isRecording) {
+                requestAnimationFrame(updateWaveform);
+            }
+        }
+
+        async function startRecording() {
+            const apiKey = humeApiKey.value.trim();
+            if (!apiKey) {
+                voiceStatus.textContent = '⚠️ Please enter your Hume AI API key above';
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                // Set up audio analysis for waveform
+                audioContext = new AudioContext();
+                analyser = audioContext.createAnalyser();
+                const source = audioContext.createMediaStreamSource(stream);
+                source.connect(analyser);
+                analyser.fftSize = 256;
+
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (e) => {
+                    audioChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    await analyzeWithHume(audioBlob, apiKey);
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+
+                recordBtn.classList.add('recording');
+                recordBtnText.textContent = '🔴 Recording...';
+                voiceStatus.textContent = 'Release to analyze';
+                waveform.style.display = 'flex';
+                createWaveformBars();
+                updateWaveform();
+
+            } catch (err) {
+                voiceStatus.textContent = '❌ Microphone access denied';
+                console.error(err);
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                isRecording = false;
+
+                recordBtn.classList.remove('recording');
+                recordBtnText.textContent = '🎤 Hold to Record';
+                voiceStatus.textContent = 'Analyzing with Hume AI...';
+            }
+        }
+
+        async function analyzeWithHume(audioBlob, apiKey) {
+            try {
+                // Convert blob to base64
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+
+                reader.onloadend = async () => {
+                    const base64Audio = reader.result.split(',')[1];
+
+                    // Call Hume API
+                    const response = await fetch('https://api.hume.ai/v0/batch/jobs', {
+                        method: 'POST',
+                        headers: {
+                            'X-Hume-Api-Key': apiKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            models: {
+                                prosody: {}
+                            },
+                            files: [{
+                                content_type: 'audio/webm',
+                                data: base64Audio
+                            }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status}`);
+                    }
+
+                    const job = await response.json();
+                    voiceStatus.textContent = 'Processing emotions...';
+
+                    // Poll for results
+                    await pollForResults(job.job_id, apiKey);
+                };
+
+            } catch (err) {
+                console.error('Hume API error:', err);
+                voiceStatus.textContent = '❌ Analysis failed. Check your API key.';
+                waveform.style.display = 'none';
+            }
+        }
+
+        async function pollForResults(jobId, apiKey) {
+            const maxAttempts = 30;
+            let attempts = 0;
+
+            while (attempts < maxAttempts) {
+                await new Promise(r => setTimeout(r, 1000));
+
+                const response = await fetch(`https://api.hume.ai/v0/batch/jobs/${jobId}/predictions`, {
+                    headers: { 'X-Hume-Api-Key': apiKey }
+                });
+
+                if (response.status === 200) {
+                    const data = await response.json();
+                    processHumeResults(data);
+                    return;
+                } else if (response.status === 400) {
+                    // Still processing
+                    attempts++;
+                    voiceStatus.textContent = `Processing... (${attempts}s)`;
+                } else {
+                    throw new Error('Failed to get results');
+                }
+            }
+
+            voiceStatus.textContent = '❌ Analysis timed out';
+        }
+
+        function processHumeResults(data) {
+            try {
+                // Extract prosody predictions
+                const predictions = data[0]?.results?.predictions[0]?.models?.prosody?.grouped_predictions[0]?.predictions[0]?.emotions;
+
+                if (!predictions || predictions.length === 0) {
+                    voiceStatus.textContent = '❌ No emotions detected. Try speaking more clearly.';
+                    return;
+                }
+
+                // Sort by score
+                const sorted = [...predictions].sort((a, b) => b.score - a.score);
+                const topEmotions = sorted.slice(0, 6);
+
+                // Display emotion bars
+                emotionBars.innerHTML = '';
+                topEmotions.forEach(emotion => {
+                    const percentage = Math.round(emotion.score * 100);
+                    const tone = humeToTone[emotion.name] || 'neutral';
+                    const color = toneColors[tone] || '#667eea';
+
+                    emotionBars.innerHTML += `
+                        <div class="emotion-bar">
+                            <span class="emotion-name">${emotion.name}</span>
+                            <div class="emotion-track">
+                                <div class="emotion-fill" style="width: ${percentage}%; background: ${color};"></div>
+                            </div>
+                            <span class="emotion-score">${percentage}%</span>
+                        </div>
+                    `;
+                });
+
+                voiceResult.style.display = 'block';
+                waveform.style.display = 'none';
+
+                // Get dominant tone
+                const dominantEmotion = sorted[0].name;
+                const dominantTone = humeToTone[dominantEmotion] || 'neutral';
+
+                voiceStatus.textContent = `Detected: ${dominantEmotion}`;
+
+                // If there's text in the input, enhance it with voice-detected tone
+                // Note: Voice doesn't give us word-level emphasis, so we only add emojis (no styling)
+                // For word emphasis, you'd need speech-to-text with prosody analysis
+                const text = messageInput.value.trim() || `I'm feeling ${dominantEmotion.toLowerCase()}`;
+                currentEnhanced = enhance(text, dominantTone, [], enableEmojis.checked, false, intensity.value);
+                sourceLabel.textContent = `(from voice: ${dominantEmotion} - add text for emphasis styling)`;
+
+                toneBadge.textContent = dominantTone.charAt(0).toUpperCase() + dominantTone.slice(1);
+                toneBadge.className = 'tone-badge tone-' + dominantTone;
+                previewBox.textContent = currentEnhanced;
+                resultSection.classList.add('visible');
+
+            } catch (err) {
+                console.error('Error processing results:', err);
+                voiceStatus.textContent = '❌ Error processing results';
+            }
+        }
+
+        // Record button events
+        recordBtn.addEventListener('mousedown', startRecording);
+        recordBtn.addEventListener('mouseup', stopRecording);
+        recordBtn.addEventListener('mouseleave', () => {
+            if (isRecording) stopRecording();
+        });
+        recordBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startRecording();
+        });
+        recordBtn.addEventListener('touchend', stopRecording);
+
+        // ============================================
+        // Other Events
+        // ============================================
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(currentEnhanced).then(() => {
+                copiedToast.classList.add('visible');
+                setTimeout(() => copiedToast.classList.remove('visible'), 2000);
+            });
+        });
+
+        newBtn.addEventListener('click', () => {
+            messageInput.value = '';
+            resultSection.classList.remove('visible');
+            voiceResult.style.display = 'none';
+            voiceStatus.textContent = 'Press and hold to record your voice';
+            messageInput.focus();
+        });
+
+        document.querySelectorAll('.example-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                messageInput.value = btn.dataset.text;
+                enhanceBtn.click();
+            });
+        });
+
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                enhanceBtn.click();
+            }
+        });
+
+        // Load saved API key
+        const savedKey = localStorage.getItem('humeApiKey');
+        if (savedKey) humeApiKey.value = savedKey;
+        humeApiKey.addEventListener('change', () => {
+            localStorage.setItem('humeApiKey', humeApiKey.value);
+        });
+    </script>
+</body>
+</html>

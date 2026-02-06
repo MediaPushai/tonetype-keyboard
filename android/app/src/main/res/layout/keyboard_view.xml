@@ -3,17 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#FAFAF9"
-    android:padding="4dp">
+    android:background="#4C1D95"
+    android:paddingHorizontal="3dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="4dp">
 
     <!-- Preview Bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="44dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingHorizontal="12dp"
-        android:background="#FFFFFF">
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/preview_bar_bg">
 
         <TextView
             android:id="@+id/preview_text"
@@ -21,58 +25,68 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Type a message..."
-            android:textColor="#78716C"
+            android:textColor="#A78BFA"
             android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
             android:singleLine="true"
             android:ellipsize="end" />
 
         <ProgressBar
             android:id="@+id/loading_indicator"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:visibility="gone"
-            android:indeterminateTint="#7C3AED" />
+            android:indeterminateTint="#C4B5FD" />
 
         <Button
             android:id="@+id/enhance_button"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="32dp"
+            android:minWidth="48dp"
             android:text="✨"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:backgroundTint="#7C3AED"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="12dp" />
 
     </LinearLayout>
 
-    <!-- Keyboard Rows -->
+    <!-- Keyboard Row 1 -->
     <LinearLayout
         android:id="@+id/keyboard_row_1"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="46dp"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp" />
+        android:layout_marginBottom="4dp"
+        android:paddingHorizontal="2dp" />
 
+    <!-- Keyboard Row 2 -->
     <LinearLayout
         android:id="@+id/keyboard_row_2"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="46dp"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp"
-        android:paddingHorizontal="16dp" />
+        android:layout_marginBottom="4dp"
+        android:paddingHorizontal="14dp" />
 
+    <!-- Keyboard Row 3 -->
     <LinearLayout
         android:id="@+id/keyboard_row_3"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="46dp"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp" />
+        android:layout_marginBottom="4dp"
+        android:paddingHorizontal="2dp" />
 
+    <!-- Keyboard Row 4 (Bottom / Action Row) -->
     <LinearLayout
         android:id="@+id/keyboard_row_4"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="46dp"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp" />
+        android:paddingHorizontal="2dp" />
 
 </LinearLayout>

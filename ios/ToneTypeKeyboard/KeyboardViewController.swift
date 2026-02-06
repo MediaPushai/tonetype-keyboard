@@ -235,7 +235,10 @@ struct KeyboardSettings {
         }
 
         var settings = KeyboardSettings()
-        settings.apiKey = defaults.string(forKey: "apiKey") ?? ""
+
+        // API key is stored in Keychain (shared via App Group access group)
+        settings.apiKey = KeychainHelper.shared.get(forKey: "apiKey") ?? ""
+
         settings.enableEmojis = defaults.object(forKey: "enableEmojis") as? Bool ?? true
         settings.enableStyling = defaults.object(forKey: "enableStyling") as? Bool ?? true
         settings.emojiIntensity = defaults.string(forKey: "emojiIntensity") ?? "medium"

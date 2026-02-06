@@ -10,6 +10,10 @@ final class AppState: ObservableObject {
     private let defaults: UserDefaults
     private static let suiteName = "group.com.tonetype.keyboard"
 
+    // MARK: - Keychain
+
+    private let keychain = KeychainHelper.shared
+
     // MARK: - Published Properties
 
     @Published var hasCompletedOnboarding: Bool {
@@ -17,7 +21,7 @@ final class AppState: ObservableObject {
     }
 
     @Published var apiKey: String {
-        didSet { defaults.set(apiKey, forKey: Keys.apiKey) }
+        didSet { keychain.set(apiKey, forKey: Keys.apiKey) }
     }
 
     @Published var enableEmojis: Bool {
@@ -43,6 +47,7 @@ final class AppState: ObservableObject {
         static let enableEmojis = "enableEmojis"
         static let enableStyling = "enableStyling"
         static let emojiIntensity = "emojiIntensity"
+        static let apiKeyMigrated = "apiKeyMigratedToKeychain"
     }
 
     // MARK: - Initialization
@@ -51,9 +56,12 @@ final class AppState: ObservableObject {
         // Use App Group shared defaults, fallback to standard if not available
         self.defaults = UserDefaults(suiteName: Self.suiteName) ?? .standard
 
+        // Migrate API key from UserDefaults to Keychain on first launch after update
+        migrateAPIKeyToKeychain()
+
         // Load persisted values
         self.hasCompletedOnboarding = defaults.bool(forKey: Keys.hasCompletedOnboarding)
-        self.apiKey = defaults.string(forKey: Keys.apiKey) ?? ""
+        self.apiKey = keychain.get(forKey: Keys.apiKey) ?? ""
         self.enableEmojis = defaults.object(forKey: Keys.enableEmojis) as? Bool ?? true
         self.enableStyling = defaults.object(forKey: Keys.enableStyling) as? Bool ?? true
 
@@ -62,6 +70,22 @@ final class AppState: ObservableObject {
 
         // Check keyboard status on init
         checkKeyboardStatus()
+    }
+
+    // MARK: - Migration
+
+    /// Moves the API key from UserDefaults to Keychain exactly once.
+    /// After migration, the key is deleted from UserDefaults so it no longer
+    /// sits in an unencrypted plist on disk.
+    private func migrateAPIKeyToKeychain() {
+        guard !defaults.bool(forKey: Keys.apiKeyMigrated) else { return }
+
+        if let existingKey = defaults.string(forKey: Keys.apiKey), !existingKey.isEmpty {
+            keychain.set(existingKey, forKey: Keys.apiKey)
+            defaults.removeObject(forKey: Keys.apiKey)
+        }
+
+        defaults.set(true, forKey: Keys.apiKeyMigrated)
     }
 
     // MARK: - Methods
@@ -82,6 +106,7 @@ final class AppState: ObservableObject {
         enableStyling = true
         emojiIntensity = .medium
         apiKey = ""
+        keychain.delete(forKey: Keys.apiKey)
     }
 
     /// Validate API key format (basic check)

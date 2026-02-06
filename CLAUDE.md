@@ -28,15 +28,15 @@
 - [ ] Register bundle ID: com.tonetype.keyboard
 - [ ] Replace app icon placeholder with final 1024x1024 icon
 - [ ] Generate screenshots for all iPhone sizes (6.9", 6.7", 6.5", 5.5")
-- [ ] Migrate API key storage from UserDefaults to Keychain
+- [x] Migrate API key storage from UserDefaults to Keychain — DONE 2/6/26
 - [ ] Set up tax/banking in App Store Connect
 - [ ] Submit for iOS review
 
 ## Android (Phase 2)
-- [ ] Implement numeric keyboard layout (TODO at ToneTypeIME.kt:112)
-- [ ] Add keyboard_view.xml layout file
+- [x] Implement numeric keyboard layout — DONE 2/6/26 (full 3-mode: QWERTY/numeric/symbols)
+- [x] Upgrade keyboard_view.xml with purple theme — DONE 2/6/26
 - [ ] Test on physical Android device
 - [ ] Create Google Play Console listing
 - [ ] Submit for Android review
 
-**Status:** 65% complete - iOS keyboard works, needs App Store prep and domain setup
+**Status:** 75% complete - iOS keyboard works (Keychain secure), Android keyboard complete (3-mode layout). Needs domain registration, App Store prep, and store submissions.

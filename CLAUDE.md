@@ -22,7 +22,7 @@
 
 ## Ship List (iOS First - Android Q2 2026)
 - [ ] Register tonetype.app domain
-- [ ] Deploy website to Vercel
+- [x] Deploy website to Vercel — DONE 2/6/26 (tonetype-website.vercel.app)
 - [ ] Set up email forwarding (support@, press@, appstore@)
 - [ ] Create App Store Connect listing
 - [ ] Register bundle ID: com.tonetype.keyboard

@@ -26,7 +26,7 @@
 - [ ] Set up email forwarding (support@, press@, appstore@)
 - [ ] Create App Store Connect listing
 - [ ] Register bundle ID: com.tonetype.keyboard
-- [ ] Replace app icon placeholder with final 1024x1024 icon
+- [x] Replace app icon placeholder with final 1024x1024 icon — DONE (purple gradient speech bubble with tone waves)
 - [ ] Generate screenshots for all iPhone sizes (6.9", 6.7", 6.5", 5.5")
 - [x] Migrate API key storage from UserDefaults to Keychain — DONE 2/6/26
 - [ ] Set up tax/banking in App Store Connect

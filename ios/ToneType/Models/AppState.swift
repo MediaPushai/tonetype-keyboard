@@ -56,10 +56,7 @@ final class AppState: ObservableObject {
         // Use App Group shared defaults, fallback to standard if not available
         self.defaults = UserDefaults(suiteName: Self.suiteName) ?? .standard
 
-        // Migrate API key from UserDefaults to Keychain on first launch after update
-        migrateAPIKeyToKeychain()
-
-        // Load persisted values
+        // Load persisted values (must initialize ALL stored properties before calling self methods)
         self.hasCompletedOnboarding = defaults.bool(forKey: Keys.hasCompletedOnboarding)
         self.apiKey = keychain.get(forKey: Keys.apiKey) ?? ""
         self.enableEmojis = defaults.object(forKey: Keys.enableEmojis) as? Bool ?? true
@@ -67,6 +64,14 @@ final class AppState: ObservableObject {
 
         let intensityRaw = defaults.string(forKey: Keys.emojiIntensity) ?? "medium"
         self.emojiIntensity = EmojiIntensity(rawValue: intensityRaw) ?? .medium
+
+        // Migrate API key from UserDefaults to Keychain on first launch after update
+        migrateAPIKeyToKeychain()
+
+        // Reload apiKey in case migration populated it
+        if apiKey.isEmpty {
+            self.apiKey = keychain.get(forKey: Keys.apiKey) ?? ""
+        }
 
         // Check keyboard status on init
         checkKeyboardStatus()

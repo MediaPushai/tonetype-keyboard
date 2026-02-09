@@ -27,7 +27,7 @@
 - [ ] Create App Store Connect listing
 - [ ] Register bundle ID: com.tonetype.keyboard
 - [x] Replace app icon placeholder with final 1024x1024 icon — DONE (purple gradient speech bubble with tone waves)
-- [ ] Generate screenshots for all iPhone sizes (6.9", 6.7", 6.5", 5.5")
+- [x] Generate screenshots for iPhone 6.7" (iPhone 17 Pro Max) — DONE 2/9/26 (5 screenshots: hero, how it works, setup, tones, demo)
 - [x] Migrate API key storage from UserDefaults to Keychain — DONE 2/6/26
 - [ ] Set up tax/banking in App Store Connect
 - [ ] Submit for iOS review

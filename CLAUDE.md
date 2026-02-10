@@ -20,15 +20,28 @@
 - Build iOS: Open in Xcode, select target, build
 - Run shared tests: `cd shared && npm test`
 
+## App Store Connect
+- **ASC App ID:** 6759009300
+- **Bundle ID:** com.tonetype.app (app), com.tonetype.app.keyboard (extension)
+- **Apple Team ID:** 8Q86CQRXSH
+- **SKU:** tonetype-ios-001
+
 ## Ship List (iOS First - Android Q2 2026)
-- [ ] Register tonetype.app domain
+- [ ] Register tonetype.app domain (DEFERRED — shipping with Vercel URLs)
 - [x] Deploy website to Vercel — DONE 2/6/26 (tonetype-website.vercel.app)
-- [ ] Set up email forwarding (support@, press@, appstore@)
-- [ ] Create App Store Connect listing
-- [ ] Register bundle ID: com.tonetype.keyboard
+- [ ] Set up email forwarding (DEFERRED — using timmcvick@gmail.com)
+- [x] Create App Store Connect listing — DONE 2/10/26 (ASC ID: 6759009300)
+- [x] Register bundle ID — DONE 2/10/26 (com.tonetype.app)
 - [x] Replace app icon placeholder with final 1024x1024 icon — DONE (purple gradient speech bubble with tone waves)
 - [x] Generate screenshots for iPhone 6.7" (iPhone 17 Pro Max) — DONE 2/9/26 (5 screenshots: hero, how it works, setup, tones, demo)
 - [x] Migrate API key storage from UserDefaults to Keychain — DONE 2/6/26
+- [x] Set DEVELOPMENT_TEAM in Xcode — DONE 2/10/26 (8Q86CQRXSH)
+- [x] Update URLs to Vercel subdomain — DONE 2/10/26
+- [x] Upload metadata to ASC — DONE 2/10/26
+- [x] Set up fastlane — DONE 2/10/26
+- [ ] Upload screenshots to ASC (in progress)
+- [ ] Build iOS archive and upload to ASC
+- [ ] Set review contact info in ASC (needs real phone number)
 - [ ] Set up tax/banking in App Store Connect
 - [ ] Submit for iOS review
 
@@ -39,4 +52,4 @@
 - [ ] Create Google Play Console listing
 - [ ] Submit for Android review
 
-**Status:** 75% complete - iOS keyboard works (Keychain secure), Android keyboard complete (3-mode layout). Needs domain registration, App Store prep, and store submissions.
+**Status:** 90% complete - iOS keyboard works, ASC listing created, metadata uploaded. Building archive for submission. Needs: archive upload, review contact info, tax/banking, then submit.

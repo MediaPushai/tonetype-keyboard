@@ -46,10 +46,10 @@
 - [x] Set age rating to 4+ — DONE 2/10/26
 - [x] Set copyright — DONE 2/10/26
 - [x] Changed to iPhone-only — DONE 2/10/26
-- [ ] Set pricing to Free in ASC (BLOCKED: fastlane API broken, needs manual)
-- [ ] Fill privacy nutrition labels in ASC (BLOCKED: needs manual)
-- [ ] Set up tax/banking in App Store Connect (BLOCKED: needs manual)
-- [ ] Submit for iOS review (after above 3 items done)
+- [x] Set pricing to Free in ASC — DONE 2/10/26 (Puppeteer, $0.00 across 175 countries)
+- [x] Fill privacy nutrition labels in ASC — DONE 2/10/26 (Data Not Collected)
+- [x] Set up tax/banking in App Store Connect — DONE 2/10/26 (Free Apps Agreement already active)
+- [x] Submit for iOS review — DONE 2/10/26 (v1.0.0 build 2, iPhone-only)
 
 ## Android (Phase 2)
 - [x] Implement numeric keyboard layout — DONE 2/6/26 (full 3-mode: QWERTY/numeric/symbols)
@@ -58,4 +58,4 @@
 - [ ] Create Google Play Console listing
 - [ ] Submit for Android review
 
-**Status:** 97% complete - Build uploaded, all metadata/screenshots/age rating/copyright done. BLOCKED on 3 manual ASC items: pricing, privacy labels, tax/banking. Then submit.
+**Status:** 99% complete (iOS) - SUBMITTED FOR REVIEW 2/10/26. Waiting for Apple review (24-48 hours). Android Phase 2 pending.

@@ -1,0 +1,52 @@
+Stop being misunderstood.
+
+Ever sent a message that was taken the wrong way? "Fine." can mean so many things. ToneType is the keyboard that ensures your messages read exactly how you mean them.
+
+How it works:
+1. Type your message in any app
+2. Tap the enhance button
+3. ToneType analyzes your tone
+4. Your message transforms with perfect emojis and styling
+
+Before: "I can't believe you did that"
+After: "I can't believe you did that!" with bold emphasis and emojis
+
+Features:
+
+- AI Tone Detection
+Our AI understands context, not just keywords. It knows the difference between excited "I can't wait!" and frustrated "I can't wait any longer."
+
+- Smart Emphasis
+ToneType identifies which words carry emotional weight and styles them appropriately - bold for anger, italics for sarcasm, and more.
+
+- Context-Aware Emojis
+No more scrolling through emoji keyboards. ToneType suggests the perfect emojis based on what you actually mean.
+
+- Unicode Text Styling
+Stand out with bold, italic, and stylized text that works everywhere - even in apps that don't support formatting.
+
+- Privacy First
+Your messages are only processed when you tap enhance. We never store or log what you type.
+
+- Works Everywhere
+Messages, WhatsApp, Instagram, Slack, Email - anywhere you type, ToneType works.
+
+Tone Detection:
+- Happy: Cheerful emojis + clean text
+- Sad: Gentle emojis + soft styling
+- Angry: Bold emphasis + strong emojis
+- Excited: Vibrant emojis + energetic styling
+- Sarcastic: Subtle emojis + italic text
+- Urgent: Bold caps + attention emojis
+- And more...
+
+Why ToneType?
+Communication is 90% tone, but text has 0% tone built in. ToneType bridges that gap, helping you express yourself authentically in every message.
+
+Setup is easy:
+1. Download ToneType
+2. Enable in Settings > Keyboards
+3. Switch to ToneType when typing
+4. Tap the enhance button
+
+Express yourself. Accurately.

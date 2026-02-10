@@ -1,0 +1,9 @@
+Introducing ToneType!
+
+- AI-powered tone detection
+- Smart emoji suggestions
+- Unicode text styling (bold, italic, more)
+- Works in all your favorite apps
+- Privacy-first design
+
+We'd love your feedback! Rate us or reach out at timmcvick@gmail.com

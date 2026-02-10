@@ -353,7 +353,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToneType/ToneType.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Q86CQRXSH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToneType/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToneType;
@@ -384,7 +384,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToneType/ToneType.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Q86CQRXSH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToneType/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToneType;
@@ -413,7 +413,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToneTypeKeyboard/ToneTypeKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Q86CQRXSH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToneTypeKeyboard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToneType;
@@ -441,7 +441,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToneTypeKeyboard/ToneTypeKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Q86CQRXSH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToneTypeKeyboard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToneType;

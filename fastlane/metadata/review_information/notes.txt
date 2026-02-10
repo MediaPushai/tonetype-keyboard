@@ -1,0 +1,16 @@
+ToneType is a keyboard extension that enhances messages with emojis and Unicode styling based on detected emotional tone.
+
+To test:
+1. Install the app
+2. Go to Settings > General > Keyboard > Keyboards > Add New Keyboard > ToneType
+3. Tap ToneType and enable "Allow Full Access"
+4. Open Messages or Notes
+5. Switch to ToneType keyboard (globe icon)
+6. Type a message like "I'm so excited about this!"
+7. Tap the enhance button to see enhancement
+
+The keyboard requires Full Access to make network calls to our AI service. No data is stored or logged.
+
+For testing with AI features, the app can work with a user-provided OpenAI API key, or basic offline detection is available.
+
+Contact: timmcvick@gmail.com

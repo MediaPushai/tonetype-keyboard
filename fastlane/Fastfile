@@ -37,6 +37,69 @@ platform :ios do
     )
   end
 
+  desc "Set age rating to 4+ (all content ratings NONE)"
+  lane :set_age_rating do
+    require 'spaceship'
+    Spaceship::ConnectAPI.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
+
+    app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
+    UI.message("App: #{app.name}")
+
+    app_info = app.fetch_live_app_info || app.fetch_edit_app_info
+    UI.message("AppInfo ID: #{app_info.id}")
+
+    ard = app_info.fetch_age_rating_declaration
+    ard.update(attributes: {
+      'alcoholTobaccoOrDrugUseOrReferences' => 'NONE',
+      'contests' => 'NONE',
+      'gamblingSimulated' => 'NONE',
+      'medicalOrTreatmentInformation' => 'NONE',
+      'profanityOrCrudeHumor' => 'NONE',
+      'sexualContentGraphicAndNudity' => 'NONE',
+      'sexualContentOrNudity' => 'NONE',
+      'horrorOrFearThemes' => 'NONE',
+      'matureOrSuggestiveThemes' => 'NONE',
+      'unrestrictedWebAccess' => false,
+      'violenceCartoonOrFantasy' => 'NONE',
+      'violenceRealisticProlongedGraphicOrSadistic' => 'NONE',
+      'violenceRealistic' => 'NONE',
+      'gambling' => false,
+      'ageAssurance' => false,
+      'lootBox' => false,
+      'gunsOrOtherWeapons' => 'NONE',
+      'advertising' => false,
+      'healthOrWellnessTopics' => false,
+      'userGeneratedContent' => false,
+      'messagingAndChat' => false,
+      'parentalControls' => false
+    })
+    UI.success("Age rating set to 4+")
+  end
+
+  desc "Set pricing to Free"
+  lane :set_pricing do
+    require 'spaceship'
+    Spaceship::ConnectAPI.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
+    app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
+
+    # Get available price tiers - tier 0 = Free
+    # Set to free via price schedule
+    body = {
+      data: {
+        type: "appPrices",
+        attributes: {
+          startDate: nil
+        },
+        relationships: {
+          app: { data: { type: "apps", id: app.id } },
+          priceTier: { data: { type: "appPriceTiers", id: "0" } }
+        }
+      }
+    }
+    Spaceship::ConnectAPI.post("appPrices", body)
+    UI.success("Pricing set to Free")
+  end
+
   desc "Full pipeline: build, upload, metadata"
   lane :release do
     build

@@ -91,8 +91,8 @@ We may update this Privacy Policy from time to time. We will notify you of chang
 ## Contact Us
 
 If you have questions about this Privacy Policy:
-- Email: privacy@tonetype.app
-- Website: https://tonetype.app/privacy
+- Email: timmcvick@gmail.com
+- Website: https://tonetype-website.vercel.app/privacy.html
 
 ## California Privacy Rights
 

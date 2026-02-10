@@ -44,7 +44,7 @@ You retain ownership of any text you type. By using the enhance feature, you gra
 
 ## Privacy
 
-Your use of ToneType is also governed by our Privacy Policy, which is incorporated into these Terms by reference. Please review our Privacy Policy at https://tonetype.app/privacy.
+Your use of ToneType is also governed by our Privacy Policy, which is incorporated into these Terms by reference. Please review our Privacy Policy at https://tonetype-website.vercel.app/privacy.html.
 
 ## Disclaimers
 
@@ -128,8 +128,8 @@ These Terms, together with our Privacy Policy, constitute the entire agreement b
 ## Contact
 
 For questions about these Terms:
-- Email: legal@tonetype.app
-- Website: https://tonetype.app/terms
+- Email: timmcvick@gmail.com
+- Website: https://tonetype-website.vercel.app/terms.html
 
 ## Acknowledgment
 

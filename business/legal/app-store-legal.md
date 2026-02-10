@@ -3,16 +3,16 @@
 ## App Store Connect Metadata
 
 ### Privacy Policy URL
-https://tonetype.app/privacy
+https://tonetype-website.vercel.app/privacy.html
 
 ### Terms of Service URL
-https://tonetype.app/terms
+https://tonetype-website.vercel.app/terms.html
 
 ### Support URL
-https://tonetype.app/support
+https://tonetype-website.vercel.app/support.html
 
 ### Marketing URL
-https://tonetype.app
+https://tonetype-website.vercel.app
 
 ---
 
@@ -174,13 +174,13 @@ No copyrighted content
 
 **Developer Name**: ToneType
 
-**Contact Email**: appstore@tonetype.app
+**Contact Email**: timmcvick@gmail.com
 
 **Phone**: [To be added]
 
 **Address**: [To be added]
 
-**Support Contact**: support@tonetype.app
+**Support Contact**: timmcvick@gmail.com
 
 ---
 
@@ -203,7 +203,7 @@ NOTES:
 - The keyboard requires Full Access to make network calls to our AI service
 - No data is stored or logged
 - For testing AI features, the app works with basic offline detection
-- Contact: review@tonetype.app for any questions
+- Contact: timmcvick@gmail.com for any questions
 ```
 
 ---

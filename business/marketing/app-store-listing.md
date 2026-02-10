@@ -84,7 +84,7 @@ tone,emoji,keyboard,AI,text,styling,bold,italic,unicode,enhance,express,emotion,
 • Works in all your favorite apps
 • Privacy-first design
 
-We'd love your feedback! Rate us or reach out at hello@tonetype.app
+We'd love your feedback! Rate us or reach out at timmcvick@gmail.com
 
 ---
 
@@ -138,9 +138,9 @@ Express yourself accurately with AI-powered tone detection. One tap adds perfect
 
 ## Support Information
 
-**Support URL:** https://tonetype.app/support
-**Marketing URL:** https://tonetype.app
-**Privacy Policy URL:** https://tonetype.app/privacy
+**Support URL:** https://tonetype-website.vercel.app/support.html
+**Marketing URL:** https://tonetype-website.vercel.app
+**Privacy Policy URL:** https://tonetype-website.vercel.app/privacy.html
 
 ---
 
@@ -169,4 +169,4 @@ The keyboard requires Full Access to make network calls to our AI service. No da
 
 For testing with AI features, the app can work with a user-provided OpenAI API key, or basic offline detection is available.
 
-Contact: review@tonetype.app
+Contact: timmcvick@gmail.com

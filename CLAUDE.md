@@ -39,11 +39,12 @@
 - [x] Update URLs to Vercel subdomain — DONE 2/10/26
 - [x] Upload metadata to ASC — DONE 2/10/26
 - [x] Set up fastlane — DONE 2/10/26
-- [ ] Upload screenshots to ASC (in progress)
-- [ ] Build iOS archive and upload to ASC
+- [x] Upload screenshots to ASC — DONE 2/10/26
+- [x] Build iOS archive and upload to ASC — DONE 2/10/26 (v1.0.0 build 1, processing)
+- [x] Fix app icon alpha channel — DONE 2/10/26
 - [ ] Set review contact info in ASC (needs real phone number)
 - [ ] Set up tax/banking in App Store Connect
-- [ ] Submit for iOS review
+- [ ] Submit for iOS review (build must finish processing first)
 
 ## Android (Phase 2)
 - [x] Implement numeric keyboard layout — DONE 2/6/26 (full 3-mode: QWERTY/numeric/symbols)
@@ -52,4 +53,4 @@
 - [ ] Create Google Play Console listing
 - [ ] Submit for Android review
 
-**Status:** 90% complete - iOS keyboard works, ASC listing created, metadata uploaded. Building archive for submission. Needs: archive upload, review contact info, tax/banking, then submit.
+**Status:** 95% complete - Build uploaded to ASC, metadata and screenshots uploaded. Needs: review contact phone number, tax/banking setup, then submit for review.

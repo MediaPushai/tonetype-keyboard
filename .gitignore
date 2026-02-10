@@ -1,0 +1,7 @@
+build/
+*.xcarchive
+*.ipa
+*.dSYM
+DerivedData/
+node_modules/
+.DS_Store

@@ -149,6 +149,33 @@ platform :ios do
     UI.success("Build swapped to build number #{target_build.version}!")
   end
 
+  desc "Cancel App Store review submission"
+  lane :cancel_review do
+    require 'spaceship'
+    Spaceship::ConnectAPI.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
+
+    app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
+    UI.message("App: #{app.name}")
+
+    # Check for version in review
+    version = app.get_edit_app_store_version || app.get_pending_release_app_store_version
+    if version.nil?
+      UI.user_error!("No editable or pending version found")
+    end
+
+    UI.message("Version: #{version.version_string}, State: #{version.app_store_state}")
+
+    # Cancel by removing the submission via the version's submission relationship
+    submission = version.fetch_app_store_version_submission
+    if submission
+      UI.message("Found submission: #{submission.id}, cancelling...")
+      submission.delete!
+      UI.success("Review submission CANCELLED!")
+    else
+      UI.important("No active submission found (state: #{version.app_store_state})")
+    end
+  end
+
   desc "Full pipeline: build, upload, metadata"
   lane :release do
     build

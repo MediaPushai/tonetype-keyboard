@@ -119,6 +119,36 @@ platform :ios do
     UI.success("Copyright set to '2026 ToneType'")
   end
 
+  desc "Switch build on app store version to Build 2 (iPhone-only)"
+  lane :swap_build do
+    require 'spaceship'
+    Spaceship::ConnectAPI.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
+
+    app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
+    UI.message("App: #{app.name}")
+
+    version = app.get_edit_app_store_version
+    UI.message("Edit version: #{version.version_string} (ID: #{version.id})")
+
+    # Get all builds
+    builds = app.get_builds
+    builds.each do |b|
+      UI.message("Build: #{b.version} (#{b.id}) - processing: #{b.processing_state}")
+    end
+
+    # Find build number 2 (iPhone-only)
+    target_build = builds.find { |b| b.version == "2" }
+    if target_build.nil?
+      UI.user_error!("Could not find build number 2")
+    end
+
+    UI.message("Selecting build: #{target_build.version} (#{target_build.id})")
+
+    # Update the version to use the new build
+    version.select_build(build_id: target_build.id)
+    UI.success("Build swapped to build number #{target_build.version}!")
+  end
+
   desc "Full pipeline: build, upload, metadata"
   lane :release do
     build

@@ -76,28 +76,47 @@ platform :ios do
     UI.success("Age rating set to 4+")
   end
 
-  desc "Set pricing to Free"
-  lane :set_pricing do
+  desc "Set pricing to Free and upload copyright"
+  lane :prepare_submission do
     require 'spaceship'
     Spaceship::ConnectAPI.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
     app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
 
-    # Get available price tiers - tier 0 = Free
-    # Set to free via price schedule
+    # Set pricing to Free via appPriceSchedules
+    client = Spaceship::ConnectAPI.client
     body = {
       data: {
-        type: "appPrices",
-        attributes: {
-          startDate: nil
-        },
+        type: "appPriceSchedules",
         relationships: {
           app: { data: { type: "apps", id: app.id } },
-          priceTier: { data: { type: "appPriceTiers", id: "0" } }
+          baseTerritory: { data: { type: "territories", id: "USA" } },
+          manualPrices: { data: [
+            {
+              type: "appPrices",
+              id: "${price1}",
+              attributes: { startDate: nil },
+              relationships: {
+                appPricePoint: {
+                  data: { type: "appPricePoints", id: "eyJzIjoiNjc1OTAwOTMwMCIsInQiOiJVU0EiLCJwIjoiMTAwMDAifQ" }
+                }
+              }
+            }
+          ] }
         }
       }
     }
-    Spaceship::ConnectAPI.post("appPrices", body)
-    UI.success("Pricing set to Free")
+
+    begin
+      resp = client.post("appPriceSchedules", body)
+      UI.success("Pricing set to Free")
+    rescue => e
+      UI.important("Pricing API error (may need manual setup): #{e.message}")
+    end
+
+    # Upload copyright via version metadata
+    version = app.get_edit_app_store_version
+    version.update(attributes: { copyright: "2026 ToneType" })
+    UI.success("Copyright set to '2026 ToneType'")
   end
 
   desc "Full pipeline: build, upload, metadata"

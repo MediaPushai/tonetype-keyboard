@@ -50,6 +50,17 @@
 - [x] Fill privacy nutrition labels in ASC — DONE 2/10/26 (Data Not Collected)
 - [x] Set up tax/banking in App Store Connect — DONE 2/10/26 (Free Apps Agreement already active)
 - [x] Submit for iOS review — DONE 2/10/26 (v1.0.0 build 2, iPhone-only)
+- [x] Cancel App Store review — DONE 2/10/26 (pulled from review for TestFlight testing first)
+- [x] Set up TestFlight — DONE 2/10/26 (public link: https://testflight.apple.com/join/5Yx4kE68)
+- [x] Submit for Beta App Review — DONE 2/10/26 (waiting for Apple beta review approval)
+- [ ] Test app via TestFlight (BLOCKED: waiting for beta review, 1-24 hours)
+- [ ] Resubmit for App Store review after testing
+- [ ] App Store review (24-48 hours after resubmission)
+
+## OpenClaw Handoff
+- [x] Push all code to public repo (MediaPushai/tonetype-keyboard) — DONE 2/10/26
+- [x] Fork to timmcvick-debug/tonetype-keyboard — DONE 2/10/26
+- [x] Create OpenClaw development prompt — DONE 2/10/26 (~/Desktop/tonetype-openclaw-prompt.md)
 
 ## Android (Phase 2)
 - [x] Implement numeric keyboard layout — DONE 2/6/26 (full 3-mode: QWERTY/numeric/symbols)
@@ -58,4 +69,4 @@
 - [ ] Create Google Play Console listing
 - [ ] Submit for Android review
 
-**Status:** 99% complete (iOS) - SUBMITTED FOR REVIEW 2/10/26. Waiting for Apple review (24-48 hours). Android Phase 2 pending.
+**Status:** 99% complete (iOS) - TestFlight beta review pending. Public link: https://testflight.apple.com/join/5Yx4kE68. Code handed off to OpenClaw (timmcvick-debug/tonetype-keyboard). Android Phase 2 deferred to Q2 2026.

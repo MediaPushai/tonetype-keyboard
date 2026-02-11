@@ -206,7 +206,8 @@ platform :ios do
       builds.each do |b|
         UI.message("  Build #{b.version} — Processing: #{b.processing_state}")
         begin
-          beta = b.get_build_beta_details
+          beta_details = b.get_build_beta_details
+          beta = beta_details.is_a?(Array) ? beta_details.first : beta_details
           if beta
             UI.message("    External: #{beta.external_build_state}")
             UI.message("    Internal: #{beta.internal_build_state}")

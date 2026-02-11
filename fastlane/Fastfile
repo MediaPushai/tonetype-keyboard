@@ -176,6 +176,52 @@ platform :ios do
     end
   end
 
+  desc "Check App Store and TestFlight review status"
+  lane :check_status do
+    require 'spaceship'
+
+    Spaceship::Tunes.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
+
+    app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
+    UI.message("=" * 50)
+    UI.message("App: #{app.name} (#{app.bundle_id})")
+    UI.message("=" * 50)
+
+    # App Store version status
+    UI.header("App Store Review Status")
+    versions = app.get_app_store_versions
+    if versions && versions.any?
+      versions.each do |v|
+        UI.message("  v#{v.version_string}: #{v.app_store_state}")
+      end
+    else
+      UI.important("  No App Store versions found")
+    end
+
+    # Builds and TestFlight status
+    UI.message("")
+    UI.header("Builds / TestFlight Status")
+    builds = app.get_builds
+    if builds && builds.any?
+      builds.each do |b|
+        UI.message("  Build #{b.version} — Processing: #{b.processing_state}")
+        begin
+          beta = b.get_build_beta_details
+          if beta
+            UI.message("    External: #{beta.external_build_state}")
+            UI.message("    Internal: #{beta.internal_build_state}")
+          end
+        rescue => e
+          UI.message("    Beta details: #{e.message}")
+        end
+      end
+    else
+      UI.important("  No builds found")
+    end
+
+    UI.message("=" * 50)
+  end
+
   desc "Full pipeline: build, upload, metadata"
   lane :release do
     build

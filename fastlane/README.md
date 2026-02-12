@@ -71,6 +71,22 @@ Switch build on app store version to Build 2 (iPhone-only)
 
 Cancel App Store review submission
 
+### ios check_status
+
+```sh
+[bundle exec] fastlane ios check_status
+```
+
+Check App Store and TestFlight review status
+
+### ios submit_review
+
+```sh
+[bundle exec] fastlane ios submit_review
+```
+
+Submit for App Store review
+
 ### ios release
 
 ```sh

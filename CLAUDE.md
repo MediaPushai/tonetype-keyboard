@@ -52,10 +52,10 @@
 - [x] Submit for iOS review — DONE 2/10/26 (v1.0.0 build 2, iPhone-only)
 - [x] Cancel App Store review — DONE 2/10/26 (pulled from review for TestFlight testing first)
 - [x] Set up TestFlight — DONE 2/10/26 (public link: https://testflight.apple.com/join/5Yx4kE68)
-- [x] Submit for Beta App Review — DONE 2/10/26 (waiting for Apple beta review approval)
-- [ ] Test app via TestFlight (BLOCKED: waiting for beta review, 1-24 hours)
-- [ ] Resubmit for App Store review after testing
-- [ ] App Store review (24-48 hours after resubmission)
+- [x] Submit for Beta App Review — DONE 2/10/26 (BETA_APPROVED)
+- [x] TestFlight public link live — https://testflight.apple.com/join/5Yx4kE68
+- [x] Resubmit for App Store review — DONE 2/12/26 (Build 2, v1.0.0)
+- [ ] App Store review (24-48 hours — submitted 2/12/26)
 
 ## OpenClaw Handoff
 - [x] Push all code to public repo (MediaPushai/tonetype-keyboard) — DONE 2/10/26
@@ -69,4 +69,4 @@
 - [ ] Create Google Play Console listing
 - [ ] Submit for Android review
 
-**Status:** 99% complete (iOS) - TestFlight beta review pending. Public link: https://testflight.apple.com/join/5Yx4kE68. Code handed off to OpenClaw (timmcvick-debug/tonetype-keyboard). Android Phase 2 deferred to Q2 2026.
+**Status:** Submitted for App Store review 2/12/26 (Build 2, v1.0.0). Expect 24-48 hours. TestFlight: https://testflight.apple.com/join/5Yx4kE68. Android Phase 2 deferred to Q2 2026.

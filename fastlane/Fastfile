@@ -223,6 +223,40 @@ platform :ios do
     UI.message("=" * 50)
   end
 
+  desc "Submit for App Store review"
+  lane :submit_review do
+    require 'spaceship'
+    Spaceship::ConnectAPI.login(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id))
+
+    app = Spaceship::ConnectAPI::App.find(CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier))
+    UI.message("App: #{app.name}")
+
+    version = app.get_edit_app_store_version
+    if version.nil?
+      UI.user_error!("No editable App Store version found")
+    end
+
+    UI.message("Version: #{version.version_string}, State: #{version.app_store_state}")
+
+    # Verify a build is attached
+    build = version.build
+    if build
+      UI.message("Build attached: #{build.version}")
+    else
+      UI.important("No build attached — attaching Build 2...")
+      builds = app.get_builds
+      target = builds.find { |b| b.version == "2" }
+      UI.user_error!("Build 2 not found") unless target
+      version.select_build(build_id: target.id)
+      UI.success("Build 2 attached")
+    end
+
+    # Submit for review
+    UI.message("Submitting for App Store review...")
+    Spaceship::ConnectAPI.post_app_store_version_submission(app_store_version_id: version.id)
+    UI.success("Submitted for App Store review!")
+  end
+
   desc "Full pipeline: build, upload, metadata"
   lane :release do
     build
